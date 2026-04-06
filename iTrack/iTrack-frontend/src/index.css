@@ -1,0 +1,175 @@
+@import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'Courier New', 'Fira Code', monospace;
+  overflow-x: hidden;
+}
+
+/* Scanline overlay */
+.scanline-overlay {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.03) 0px,
+    rgba(0, 255, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* Glitch text effect */
+@keyframes glitch {
+  0% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
+  25% { text-shadow: -2px 0 #ff0000, 2px 0 #00ff00; }
+  50% { text-shadow: 2px 2px #ff0000, -2px -2px #00ff00; }
+  75% { text-shadow: -2px 2px #ff0000, 2px -2px #00ff00; }
+  100% { text-shadow: 2px 0 #ff0000, -2px 0 #00ff00; }
+}
+
+.glitch-text {
+  animation: glitch 3s infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000; }
+  50% { box-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000; }
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00; }
+  50% { box-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00; }
+}
+
+.pulse-red { animation: pulse-red 2s infinite; }
+.pulse-green { animation: pulse-green 2s infinite; }
+
+/* Typing animation */
+@keyframes blink-caret {
+  0%, 100% { border-color: #00ff00; }
+  50% { border-color: transparent; }
+}
+
+.typing-cursor {
+  border-right: 2px solid #00ff00;
+  animation: blink-caret 0.75s step-end infinite;
+}
+
+/* Radar sweep */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.radar-sweep {
+  animation: radar-sweep 4s linear infinite;
+}
+
+/* Data stream animation */
+@keyframes scroll-data {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.data-stream {
+  animation: scroll-data 20s linear infinite;
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Glow effects */
+.glow-green { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+.glow-red { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #1a1a1a; border: 1px solid #00ff0033; }
+::-webkit-scrollbar-thumb:hover { background: #2a2a2a; }
+
+/* Leaflet dark theme overrides */
+.leaflet-container {
+  background: #0a0a0a !important;
+}
+
+.leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) brightness(0.6) contrast(1.5) saturate(0.3) !important;
+}
+
+.leaflet-control-zoom a {
+  background: #111 !important;
+  color: #00ff00 !important;
+  border-color: #00ff0033 !important;
+}
+
+.leaflet-control-attribution {
+  display: none !important;
+}
+
+/* Target marker pulse */
+@keyframes marker-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(2); opacity: 0.3; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.target-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.target-marker::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  animation: marker-pulse 2s infinite;
+}
+
+/* Progress bar glow */
+@keyframes progress-glow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+
+.progress-glow {
+  animation: progress-glow 2s infinite;
+}
+@layer base {
+  :root {
+    --radius: 0.5rem
+  }
+}
+
